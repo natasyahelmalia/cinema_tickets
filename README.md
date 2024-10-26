@@ -1,2 +1,2 @@
-# cinema_tickets
-Rakamin Homework
+# pemesanan-tiket
+Bioskop v1 Sederhana
