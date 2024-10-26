@@ -17,8 +17,7 @@
 ## Instalasi
 1. **Clone Repository**:
     ```bash
-    git clone https://github.com/natasyahelmalia/pemesanan-tiket.git
-    cd pemesanan-tiket
+    git clone https://github.com/natasyahelmalia/cinema_tickets.git
     ```
 
 2. **Setup Database**:
