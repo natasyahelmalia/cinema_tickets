@@ -12,7 +12,6 @@
 			
 		session_start();
 			
-		// cek apakah user telah login, jika belum login maka di alihkan ke halaman login
 		if($_SESSION['status'] !="login"){
 				header("location:login/index.php");
 		}
@@ -22,7 +21,6 @@
 		<h1>Selamat Datang!</h1>
 		<div class="welcome-message">
 			<?php 
-					// menampilkan pesan selamat datang
 					echo "Hai, Selamat Datang <b>" . $_SESSION['name'] . "</b>";
 				?>
 		</div>
