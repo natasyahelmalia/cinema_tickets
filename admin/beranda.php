@@ -1,3 +1,0 @@
-<html>
-SELAMAT DATANG
-</html>
