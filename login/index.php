@@ -7,7 +7,7 @@
 <body>
 	<br/>
 	<br/>
-	<center><h2>SILAHKAN LOGIN</h2></center>	
+	<center><h2>HALAMAN LOGIN</h2></center>	
 	<br/>
 	<div class="login">
 	<br/>
@@ -29,12 +29,12 @@
  
 <script type="text/javascript">
 	function validasi() {
-		var username = document.getElementById("username").value;
-		var password = document.getElementById("password").value;		
-		if (username != "" && password!="") {
+		const username = document.getElementById("username").value;
+		const password = document.getElementById("password").value;		
+		if (username != "" && password != "") {
 			return true;
-		}else{
-			alert('Username dan Password harus di isi !');
+		} else {
+			alert('Username dan Password harus diisi!');
 			return false;
 		}
 	}
