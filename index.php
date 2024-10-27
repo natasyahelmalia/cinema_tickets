@@ -26,7 +26,7 @@
 		</div>
 		<div class="nav-links">
 			<a href="pencarian/index.php">Cari Film</a>
-			<a href="daftar/index.php">Daftar Film</a>
+			<a href="tiket/index.php">Daftar Film</a>
 			<a href="logout.php" style="background-color: #dc3545;">Keluar</a>
 		</div>
 	</div>
