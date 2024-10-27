@@ -5,7 +5,7 @@ include "../koneksi.php";
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
+<meta charset="UTF-8">
 	<title>Pesan Tiket</title>
 	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="style_pesan.css">
@@ -19,14 +19,18 @@ include "../koneksi.php";
 					<th>No</th>
 					<th>Judul Film</th>
 					<th>Studio</th>
+					<th>Tanggal</th>
+					<th>Harga Tiket</th>
 					<th>Jam Tayang</th>
 				</tr>
 			</thead>
 			<tbody>
 				<?php 
-				$query_mysql = mysqli_query($con, "SELECT film.judul_film, jadwal.id_jadwal, jadwal.id_studio, jadwal.jam_tayang 
+				$tanggal = $_GET['tanggal'];
+				$query_mysql = mysqli_query($con, "SELECT film.judul_film, jadwal.id_jadwal, jadwal.id_studio, harga.harga, jadwal.jam_tayang 
 																					FROM film 
-																					JOIN jadwal ON film.id_film = jadwal.id_film") 
+																					INNER JOIN jadwal ON film.id_film = jadwal.id_film
+																					INNER JOIN harga ON film.kategori_film = harga.kategori") 
 																					or die(mysqli_error($con));
 				$nomor = 1;
 				while ($data = mysqli_fetch_array($query_mysql)) {
@@ -35,13 +39,19 @@ include "../koneksi.php";
 					<td><?php echo $nomor++; ?></td>
 					<td><?php echo htmlspecialchars($data['judul_film']); ?></td>
 					<td><?php echo htmlspecialchars($data['id_studio']); ?></td>
-					<td><a class="link-detail" href="detail_tiket.php?id_jadwal=<?php echo $data['id_jadwal']; ?>"><?php echo htmlspecialchars($data['jam_tayang']); ?></a></td>
+					<td><?php echo htmlspecialchars($tanggal); ?></td>
+					<td><?php echo "Rp " . number_format($data['harga']); ?></td>
+					<td>
+						<a class="link-detail" href="detail_tiket.php?id_jadwal=<?php echo $data['id_jadwal']; ?>&tanggal=<?php echo urlencode($tanggal); ?>&harga=<?php echo urlencode(number_format($data['harga'])); ?>">
+						<?php echo htmlspecialchars($data['jam_tayang']); ?>
+					</a>
+					</td>
 				</tr>
 				<?php } ?>
 			</tbody>
 		</table>
 		<div class="navigation">
-				<a href="index.php" class="btn">Kembali</a>
+			<a href="index.php" class="btn">Kembali</a>
 		</div>
 	</div>
 </body>

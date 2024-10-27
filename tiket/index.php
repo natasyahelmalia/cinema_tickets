@@ -23,15 +23,10 @@ include '../koneksi.php';
 				</tr>
 			</thead>
 			<tbody>
-				<?php 
-				if (isset($_GET['cari'])) {
-					$cari = $_GET['cari'];
-					$data = mysqli_query($con, "SELECT * FROM film WHERE judul_film LIKE '%".$cari."%'");				
-				} else {
-					$data = mysqli_query($con, "SELECT * FROM film");		
-				}
-				
+				<?php
+				$data = mysqli_query($con, "SELECT * FROM film");				
 				$no = 1;
+
 				while ($d = mysqli_fetch_array($data)) {
 				?>
 				<tr>
@@ -44,8 +39,13 @@ include '../koneksi.php';
 			</tbody>
 		</table>
 		<div class="navigation">
-			<a href="../" class="back-button">Kembali</a>
-			<a href="pesan_tiket.php" class="btn">Pesan Tiket</a>
+			<form action="pesan_tiket.php" method="get">
+				<label for="tanggal">Pilih Tanggal:</label>
+				<input type="date" id="tanggal" name="tanggal" required>
+				<br><br>
+				<a href="../" class="btn back-button">Kembali</a>
+				<input type="submit" class="btn" value="Pesan Tiket">
+			</form>
 		</div>
 	</div>
 </body>

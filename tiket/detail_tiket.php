@@ -16,6 +16,8 @@ include "../koneksi.php";
 
 		<?php 
 		$id_jadwal = $_GET['id_jadwal'];
+		$tanggal = $_GET['tanggal'];
+		$harga = $_GET['harga'];
 		$query_mysql = mysqli_query($con, "SELECT DISTINCT j.*, s.jumlah_kursi FROM jadwal j INNER JOIN studio s ON j.id_studio = s.id WHERE id_jadwal='$id_jadwal'") or die(mysqli_error($con));
 		$data = mysqli_fetch_array($query_mysql);
 
@@ -33,7 +35,15 @@ include "../koneksi.php";
 				<tr>
 					<td>Studio</td>
 					<td><?php echo htmlspecialchars($data['id_studio']); ?></td>
+				</tr>
+				<tr>
+					<td>Tanggal</td>
+					<td><?php echo htmlspecialchars($tanggal); ?></td>
 				</tr>	
+				<tr>
+					<td>Harga</td>
+					<td><?php echo "Rp ", htmlspecialchars($harga); ?></td>
+				</tr>		
 				<tr>
 					<td>Jam Tayang</td>
 					<td><?php echo htmlspecialchars($data['jam_tayang']); ?></td>
