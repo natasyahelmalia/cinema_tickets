@@ -48,17 +48,34 @@ include "../koneksi.php";
 					<td><?php echo htmlspecialchars($tanggal); ?></td>
 					<td><?php echo "Rp " . number_format($harga); ?></td>
 					<td>
-						<a class="link-detail" href="detail_tiket.php?id_jadwal=<?php echo $data['id_jadwal']; ?>&tanggal=<?php echo urlencode($tanggal); ?>&harga=<?php echo urlencode(number_format($data['harga'])); ?>">
+						<a class="link-detail" href="#" onclick="navigateToDetail(<?php echo $data['id_jadwal']; ?>, '<?php echo $tanggal; ?>', '<?php echo number_format($harga); ?>')">
 						<?php echo htmlspecialchars($data['jam_tayang']); ?>
-					</a>
+						</a>
 					</td>
 				</tr>
 				<?php } ?>
 			</tbody>
 		</table>
+		<tr>
+			<td>Jumlah Tiket yang Dipesan</td>
+			<td><input name="jmltiket" type="number" id="jumlahtiket" required min="1" placeholder="Masukkan jumlah tiket"></td>
+		</tr>
 		<div class="navigation">
 			<a href="index.php" class="btn">Kembali</a>
 		</div>
 	</div>
+
+	<script>
+	function navigateToDetail(id_jadwal, tanggal, harga) {
+		const jumlahTiket = document.getElementById('jumlahtiket').value;
+
+		if (!jumlahTiket || jumlahTiket <= 0) {
+			alert("Jumlah tiket harus lebih dari 0 dan tidak boleh kosong.");
+			return;
+		}
+
+		window.location.href = "detail_tiket.php?id_jadwal=" + id_jadwal + "&tanggal=" + encodeURIComponent(tanggal) + "&harga=" + encodeURIComponent(harga) + "&jumlah_tiket=" + jumlahTiket;
+	}
+	</script>
 </body>
 </html>

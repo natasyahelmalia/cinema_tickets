@@ -18,6 +18,12 @@ include "../koneksi.php";
 		$id_jadwal = $_GET['id_jadwal'];
 		$tanggal = $_GET['tanggal'];
 		$harga = $_GET['harga'];
+		$harga = floatval(str_replace(['Rp ', ','], '', $harga));
+		$jml_tiket = intval($_GET['jumlah_tiket']);
+		$harga = $harga * $jml_tiket;
+		if ($harga >= 150000) {
+			$harga *= 0.9;
+		}
 		$query_mysql = mysqli_query($con, "SELECT DISTINCT j.*, s.jumlah_kursi FROM jadwal j INNER JOIN studio s ON j.id_studio = s.id WHERE id_jadwal='$id_jadwal'") or die(mysqli_error($con));
 		$data = mysqli_fetch_array($query_mysql);
 
@@ -53,8 +59,8 @@ include "../koneksi.php";
 					<td><?php echo htmlspecialchars($data['jumlah_kursi']); ?></td>
 				</tr>
 				<tr>
-					<td>Jumlah Tiket yang Dipesan</td>
-					<td><input name="jmltiket" type="number" id="jumlahtiket" required min="1" placeholder="Masukkan jumlah tiket"></td>
+					<td>Jumlah Tiket</td>
+					<td><?php echo htmlspecialchars($jml_tiket); ?></td>
 				</tr>
 				<tr class="form-actions">
 					<td colspan="2">
