@@ -7,7 +7,7 @@
 <body>
 	<br/>
 	<br/>
-	<center><h2>HALAMAN LOGIN</h2></center>	
+	<center><h2>Halaman Login</h2></center>	
 	<br/>
 	<div class="login">
 	<br/>
@@ -38,6 +38,6 @@
 			return false;
 		}
 	}
- 
 </script>
+
 </html>
