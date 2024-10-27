@@ -34,13 +34,19 @@ include "../koneksi.php";
 																					or die(mysqli_error($con));
 				$nomor = 1;
 				while ($data = mysqli_fetch_array($query_mysql)) {
+					$harga = $data['harga'];
+
+					$dayOfWeek = date('N', strtotime($tanggal));
+					if ($dayOfWeek == 6 || $dayOfWeek == 7) {
+						$harga += 10000;
+					}
 				?>
 				<tr>
 					<td><?php echo $nomor++; ?></td>
 					<td><?php echo htmlspecialchars($data['judul_film']); ?></td>
 					<td><?php echo htmlspecialchars($data['id_studio']); ?></td>
 					<td><?php echo htmlspecialchars($tanggal); ?></td>
-					<td><?php echo "Rp " . number_format($data['harga']); ?></td>
+					<td><?php echo "Rp " . number_format($harga); ?></td>
 					<td>
 						<a class="link-detail" href="detail_tiket.php?id_jadwal=<?php echo $data['id_jadwal']; ?>&tanggal=<?php echo urlencode($tanggal); ?>&harga=<?php echo urlencode(number_format($data['harga'])); ?>">
 						<?php echo htmlspecialchars($data['jam_tayang']); ?>
