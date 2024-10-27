@@ -2,8 +2,9 @@
 include "../koneksi.php";
 
 $id_jadwal = $_GET['id_jadwal'];
-$jml_tiket = intval($_POST['jmltiket']);
-$date = date("Y-m-d");
+$jml_tiket = $_GET['jumlah_tiket'];
+$harga = $_GET['harga'];
+$tanggal = $_GET['tanggal'];
 
 $query_jadwal = mysqli_query($con, "SELECT * FROM jadwal WHERE id_jadwal='$id_jadwal'") or die(mysqli_error($con));
 $data_jadwal = mysqli_fetch_array($query_jadwal);
@@ -14,7 +15,7 @@ $id_studio = $data_jadwal['id_studio'];
 $query_film = mysqli_query($con, "SELECT judul_film FROM film WHERE id_film='$id_film'") or die(mysqli_error($con));
 $data_film = mysqli_fetch_array($query_film);
 
-mysqli_query($con, "INSERT INTO tiket (id_jadwal, tanggal, jml_kursi) VALUES ('$id_jadwal', '$date', '$jml_tiket')");
+mysqli_query($con, "INSERT INTO tiket (id_jadwal, tanggal, jml_kursi, harga) VALUES ('$id_jadwal', '$tanggal', '$jml_tiket', '$harga')");
 
 $query_tiket = mysqli_query($con, "SELECT * FROM tiket ORDER BY id_tiket DESC LIMIT 1") or die(mysqli_error($con));
 $data_tiket = mysqli_fetch_array($query_tiket);
@@ -64,11 +65,15 @@ if ($kursi_baru >= 0) {
 				</tr>    
 				<tr>
 					<td>Jumlah Tiket</td>
-					<td><?php echo htmlspecialchars($jml_tiket); ?></td>
+					<td><?php echo htmlspecialchars($jml_tiket), ' Tiket'; ?></td>
+				</tr>    
+				<tr>
+					<td>Total Bayar</td>
+					<td><?php echo "Rp ", htmlspecialchars($harga); ?></td>
 				</tr>    
 				<tr>
 					<td>Tanggal</td>
-					<td><?php echo htmlspecialchars($date); ?></td>
+					<td><?php echo htmlspecialchars($tanggal); ?></td>
 				</tr>    
 			</table>
 		</div>
