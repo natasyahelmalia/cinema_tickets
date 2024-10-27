@@ -73,7 +73,7 @@ if ($kursi_baru >= 0) {
 			</table>
 		</div>
 		<div class="button-container">
-				<a href="../index.php" class="btn">Kembali</a>
+				<a href="../index.php" class="btn">Halaman Utama</a>
 		</div>
 	</div>
 </body>
