@@ -24,7 +24,7 @@ include "../koneksi.php";
 		$data2 = mysqli_fetch_array($query_mysql2);
 		?>
 
-		<form action="cetak_tiket.php?id_jadwal=<?php echo $data['id_jadwal']; ?>" method="post" class="detail-form">
+		<form action="cetak_tiket.php?id_jadwal=<?php echo $data['id_jadwal']; ?>" method="post" class="detail-form" onsubmit="return confirmSubmit()">
 			<table class="table">
 				<tr>
 					<td>Film</td>
@@ -58,4 +58,11 @@ include "../koneksi.php";
 		</form>
 	</div>
 </body>
+
+<script>
+	function confirmSubmit() {
+		return confirm("Apakah kamu yakin ingin menyimpan data ini?");
+	}
+</script>
+
 </html>
