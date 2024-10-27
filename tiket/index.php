@@ -41,7 +41,7 @@ include '../koneksi.php';
 		<div class="navigation">
 			<form action="pesan_tiket.php" method="get">
 				<label for="tanggal">Pilih Tanggal:</label>
-				<input type="date" id="tanggal" name="tanggal" required>
+				<input type="date" id="tanggal" name="tanggal" required min="<?php echo date('Y-m-d'); ?>">
 				<br><br>
 				<a href="../" class="btn back-button">Kembali</a>
 				<input type="submit" class="btn" value="Lanjut">
