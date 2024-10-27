@@ -12,7 +12,7 @@ include "../koneksi.php";
 </head>
 <body>
 	<div class="container">
-		<h3>Detail Tiket</h3>
+		<h2 style='text-align: center; color: #333;'>Detail Tiket</h2>
 
 		<?php 
 		$id_jadwal = $_GET['id_jadwal'];
