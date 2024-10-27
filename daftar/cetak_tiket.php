@@ -1,71 +1,80 @@
 <?php 
-	include "../koneksi.php";
-	$id_jadwal = $_GET['id_jadwal'];
-	$query_mysql2 = mysqli_query($con,"SELECT * FROM jadwal WHERE id_jadwal='$id_jadwal'")or die(mysql_error());
-	$data2 = mysqli_fetch_array($query_mysql2);
-	
-	$id_film=$data2['id_film'];
-	$query_mysql = mysqli_query($con,"SELECT film.judul_film , jadwal.id_studio , jadwal.id_jam_tayang FROM film JOIN jadwal ON film.id_film = '$id_film'")or die(mysql_error());
-	$nomor = 1;
-	$data = mysqli_fetch_array($query_mysql);
-	$jml_tiket = $_POST['jmltiket'];
-	$date = date("Y-m-d");
-	mysqli_query($con,"INSERT INTO tiket VALUES('','$id_jadwal','$date','$jml_tiket')");
+include "../koneksi.php";
 
-	$query_mysql3 = mysqli_query($con,"SELECT * FROM tiket ORDER BY id_tiket DESC LIMIT 1")or die(mysql_error());
-	$data3 = mysqli_fetch_array($query_mysql3);
+$id_jadwal = $_GET['id_jadwal'];
+$jml_tiket = intval($_POST['jmltiket']);
+$date = date("Y-m-d");
 
-	$id_tiket = $data3['id_tiket'];
-	
-	?>
-<center><body>
-	<br/>
-	<br/>
-<h2>CETAK TIKET</h2>	
-	<br/>
-	<div class="login">
-	<br/>
+$query_jadwal = mysqli_query($con, "SELECT * FROM jadwal WHERE id_jadwal='$id_jadwal'") or die(mysqli_error($con));
+$data_jadwal = mysqli_fetch_array($query_jadwal);
+
+$id_film = $data_jadwal['id_film'];
+$id_studio = $data_jadwal['id_studio'];
+
+$query_film = mysqli_query($con, "SELECT judul_film FROM film WHERE id_film='$id_film'") or die(mysqli_error($con));
+$data_film = mysqli_fetch_array($query_film);
+
+mysqli_query($con, "INSERT INTO tiket (id_jadwal, tanggal, jml_kursi) VALUES ('$id_jadwal', '$date', '$jml_tiket')");
+
+$query_tiket = mysqli_query($con, "SELECT * FROM tiket ORDER BY id_tiket DESC LIMIT 1") or die(mysqli_error($con));
+$data_tiket = mysqli_fetch_array($query_tiket);
+$id_tiket = $data_tiket['id_tiket'];
+
+$query_studio = mysqli_query($con, "SELECT jumlah_kursi FROM studio WHERE id='$id_studio'") or die(mysqli_error($con));
+$data_studio = mysqli_fetch_array($query_studio);
+
+$jumlah_kursi_tersedia = intval($data_studio['jumlah_kursi']);
+$kursi_baru = $jumlah_kursi_tersedia - $jml_tiket;
+
+if ($kursi_baru >= 0) {
+	mysqli_query($con, "UPDATE studio SET jumlah_kursi='$kursi_baru' WHERE id='$id_studio'") or die(mysqli_error($con));
+} else {
+	echo "<script>alert('Jumlah tiket melebihi jumlah kursi tersedia!'); window.location.href = 'detail_tiket.php?id_jadwal=$id_jadwal';</script>";
+	exit;
+}
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Cetak Tiket</title>
+	<link rel="stylesheet" href="style_cetak.css">
+</head>
+<body>
+	<div class="container">
+		<h2>Cetak Tiket</h2>
 		<div id="printableArea">
-		<form method="post">
-			<table border="1" class="table">
-			<tr>
-				<td>ID Tiket : <?php echo $id_tiket; ?></td>
-			</tr>
-			<tr>
-				<td><h5>Studio: <?php echo $data2['id_studio']; ?></h5></td>
-			</tr>	
-			<tr>
-				<td>Jam Tayang <?php echo $data2['id_jam_tayang']; ?></td>
-			</tr>	
-			 
-			<tr>
-				<td><?php echo $data['judul_film']; ?></td>
-			</tr>	
-			<tr>
-				<td>Jumlah Tiket : <?php echo $jml_tiket ?></td>
-			</tr>	
-			<tr>
-				<td>Tanggal : <?php echo $date ?></td>
-			</tr>	
-		</table>
-		</form>
+			<table class="table">
+				<tr>
+					<td>Nomor Tiket</td>
+					<td><?php echo htmlspecialchars($id_tiket); ?></td>
+				</tr>
+				<tr>
+					<td>Studio</td>
+					<td><?php echo htmlspecialchars($id_studio); ?></td>
+				</tr>    
+				<tr>
+					<td>Jam Tayang</td>
+					<td><?php echo htmlspecialchars($data_jadwal['jam_tayang']); ?></td>
+				</tr>    
+				<tr>
+					<td>Film</td>
+					<td><?php echo htmlspecialchars($data_film['judul_film']); ?></td>
+				</tr>    
+				<tr>
+					<td>Jumlah Tiket</td>
+					<td><?php echo htmlspecialchars($jml_tiket); ?></td>
+				</tr>    
+				<tr>
+					<td>Tanggal</td>
+					<td><?php echo htmlspecialchars($date); ?></td>
+				</tr>    
+			</table>
 		</div>
-		<button onclick="printDiv()">Print</button>
-		<br>
-		<td><a href="./pesan_tiket.php">kembali </a></td>
+		<div class="button-container">
+				<a href="pesan_tiket.php" class="btn">Kembali</a>
+		</div>
 	</div>
 </body>
-
-<script>
-	function printDiv(){
-		var printContents = document.getElementById("printableArea").innerHTML;
-		document.body.innerHTML = printContents;
-
-		window.print();
-
-		document.body.innerHTML = originalContents;
-		console.log("ditekan");
-	}
-
-
-</script>
+</html>
