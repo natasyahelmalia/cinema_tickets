@@ -44,7 +44,7 @@ include '../koneksi.php';
 				<input type="date" id="tanggal" name="tanggal" required>
 				<br><br>
 				<a href="../" class="btn back-button">Kembali</a>
-				<input type="submit" class="btn" value="Pesan Tiket">
+				<input type="submit" class="btn" value="Lanjut">
 			</form>
 		</div>
 	</div>
