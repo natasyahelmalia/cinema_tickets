@@ -32,7 +32,7 @@ include "../koneksi.php";
 		$data2 = mysqli_fetch_array($query_mysql2);
 		?>
 
-		<form action="cetak_tiket.php?id_jadwal=<?php echo $data['id_jadwal']; ?>" method="post" class="detail-form" onsubmit="return confirmSubmit()">
+		<form action="cetak_tiket.php?id_jadwal=<?php echo $data['id_jadwal']; ?>&tanggal=<?php echo urlencode($tanggal); ?>&jumlah_tiket=<?php echo $jml_tiket; ?>&harga=<?php echo $harga; ?>" method="post" class="detail-form" onsubmit="return confirmSubmit()">
 			<table class="table">
 				<tr>
 					<td>Film</td>
@@ -47,9 +47,9 @@ include "../koneksi.php";
 					<td><?php echo htmlspecialchars($tanggal); ?></td>
 				</tr>	
 				<tr>
-					<td>Harga</td>
+					<td>Total Bayar</td>
 					<td><?php echo "Rp ", htmlspecialchars($harga); ?></td>
-				</tr>		
+				</tr>
 				<tr>
 					<td>Jam Tayang</td>
 					<td><?php echo htmlspecialchars($data['jam_tayang']); ?></td>
@@ -77,7 +77,7 @@ include "../koneksi.php";
 
 <script>
 	function confirmSubmit() {
-		return confirm("Apakah kamu yakin ingin menyimpan data ini?");
+		return confirm("Apakah kamu yakin akan melanjutkan transaksi ini?");
 	}
 </script>
 
